@@ -452,6 +452,16 @@ open class VeryBasicHelper: NSObject {
         return nil
     }
     
+    open class func resourcePath(_ file:String?) -> String? {
+        if let path = Bundle.main.resourcePath {
+            if let file = file {
+                return path + "/" + file
+            }
+            return path
+        }
+        return nil
+    }
+    
     open class func writeText(_ text:String, toFile:String) {
         if let path = documentPath(toFile) {
             do {
