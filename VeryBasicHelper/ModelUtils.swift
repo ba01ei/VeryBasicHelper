@@ -14,9 +14,16 @@ public class ModelUtils {
     /// RequestHelper.request(urlStr: url) { (data, error, _, _, _, _) in
     ///   let response: SomeCodableType? = ModelUtils().decode(data)
     /// }
-    public func decode<T: Codable>(_ data: Data?) -> T? {
+    public func decode<T: Codable>(_ data: Data?, throwError: Bool = false) -> T? {
         if let data = data {
-            return try? jsonDecoder.decode(T.self, from: data)
+            do {
+                return try jsonDecoder.decode(T.self, from: data)
+            } catch {
+                if throwError {
+                    assertionFailure("JSON decoding error: \(error)")
+                }
+                return nil
+            }
         } else {
             return nil
         }
