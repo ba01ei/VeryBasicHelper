@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "VeryBasicHelper"
-  s.version = "1.3.0"
+  s.version = "1.3.1"
   s.summary      = "Very Basic Helper library for Swift"
 
   s.description  = "A lot of helper functions to make writing Swift code slightly easier"
@@ -65,7 +65,7 @@ Pod::Spec.new do |s|
   #
 
   s.homepage     = "https://github.com/ba01ei/VeryBasicHelper"
-  s.source       = { :git => "git@github.com:ba01ei/VeryBasicHelper.git", :tag => "1.3.0" }
+  s.source       = { :git => "git@github.com:ba01ei/VeryBasicHelper.git", :tag => "1.3.1" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
