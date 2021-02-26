@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 /// Helper to make network request to a REST endpoint
 open class RequestHelper: NSObject {
@@ -95,5 +96,24 @@ open class RequestHelper: NSObject {
                 completionHandler?(data, error, statusCode, responseHeader, responseJson, responseString)
             }).resume()
         }
+    }
+    
+    /// Make network GET or POST request to a REST endpoint
+    /// - parameter urlStr is the url
+    /// - parameter timeout is the timeout in seconds, defaulting to 10
+    /// - parameter body is the POST body, if null it's a GET request. It can be a Data or a dictionary or a string.
+    /// - parameter header is the request header
+    /// - parameter sharedSession indicates whether sharedSession should be used, defaulting to true
+    /// - returns a Combine Publisher that includes optional data and error in a tuple
+    @available(iOS 13.0, *)
+    open class func requestPublisher(urlStr:String, timeout : TimeInterval = 10, body: Any? = nil, header:[String:String]? = nil, sharedSession:Bool = true) -> AnyPublisher<(Data?, Error?), Never> {
+
+        return Deferred {
+            Future<(Data?, Error?), Never> { promise in
+                RequestHelper.request(urlStr: urlStr, timeout: timeout, body: body, header: header, sharedSession: sharedSession) { (data, error, _, _, _, _) in
+                    promise(.success((data, error)))
+                }
+            }
+        }.eraseToAnyPublisher()
     }
 }
